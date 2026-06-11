@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Spider-Man",
+    "image": "https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png",
+    "editorial": "Marvel",
+    "creationDate": "August 1962",
+    "funFact": "Peter Parker was the first teenage superhero who wasn't just a sidekick."
+  },
+  {
+    "name": "Batman",
+    "image": "https://upload.wikimedia.org/wikipedia/en/c/c7/Batman_Infobox.jpg",
+    "editorial": "DC",
+    "creationDate": "May 1939",
+    "funFact": "Batman has no superpowers — he relies entirely on intellect, martial arts, and technology."
+  },
+  {
+    "name": "Wonder Woman",
+    "image": "https://upload.wikimedia.org/wikipedia/en/9/93/Wonder_Woman.jpg",
+    "editorial": "DC",
+    "creationDate": "October 1941",
+    "funFact": "Wonder Woman was created by William Moulton Marston, who also invented the lie detector."
+  },
+  {
+    "name": "Iron Man",
+    "image": "https://upload.wikimedia.org/wikipedia/en/4/47/Iron_Man_%28circa_2018%29.png",
+    "editorial": "Marvel",
+    "creationDate": "March 1963",
+    "funFact": "Tony Stark was originally created as a challenge — to make readers like an arms dealer."
+  },
+  {
+    "name": "Superman",
+    "image": "https://upload.wikimedia.org/wikipedia/en/3/35/Supermanflying.png",
+    "editorial": "DC",
+    "creationDate": "April 1938",
+    "funFact": "Superman is considered the first superhero of the modern comic book era."
+  },
+  {
+    "name": "Black Panther",
+    "image": "https://upload.wikimedia.org/wikipedia/en/1/1e/Black_Panther_%28Marvel_Comics_character%29.jpg",
+    "editorial": "Marvel",
+    "creationDate": "July 1966",
+    "funFact": "Black Panther was the first Black superhero in mainstream American comics."
+  },
+  {
+    "name": "The Flash",
+    "image": "https://upload.wikimedia.org/wikipedia/en/5/56/TheFlash.png",
+    "editorial": "DC",
+    "creationDate": "October 1956",
+    "funFact": "Barry Allen's version of The Flash kickstarted the Silver Age of comics."
+  },
+  {
+    "name": "Captain America",
+    "image": "https://upload.wikimedia.org/wikipedia/en/3/35/Cap_Say_No_to_Drugs.jpg",
+    "editorial": "Marvel",
+    "creationDate": "March 1941",
+    "funFact": "Captain America's first comic showed him punching Adolf Hitler — a year before the US entered WWII."
+  },
+  {
+    "name": "Thor",
+    "image": "https://upload.wikimedia.org/wikipedia/en/a/a7/Thor_%28Marvel_Comics%29.png",
+    "editorial": "Marvel",
+    "creationDate": "August 1962",
+    "funFact": "Thor is based on the actual Norse god of thunder from Viking mythology."
+  },
+  {
+    "name": "Green Lantern",
+    "image": "https://upload.wikimedia.org/wikipedia/en/0/00/Green_Lantern_Hal_Jordan.jpg",
+    "editorial": "DC",
+    "creationDate": "October 1959",
+    "funFact": "The Green Lantern ring is considered the most powerful weapon in the DC universe."
+  },
+  {
+    "name": "Wolverine",
+    "image": "https://upload.wikimedia.org/wikipedia/en/8/8b/Wolverine_%28Marvel_Comics_character%29.jpg",
+    "editorial": "Marvel",
+    "creationDate": "November 1974",
+    "funFact": "Wolverine was originally created as a one-off character to fight the Hulk."
+  },
+  {
+    "name": "Aquaman",
+    "image": "https://upload.wikimedia.org/wikipedia/en/1/1e/Aquaman_%28Arthur_Curry%29.jpg",
+    "editorial": "DC",
+    "creationDate": "November 1941",
+    "funFact": "Aquaman can communicate telepathically with all marine life, not just fish."
+  },
+  {
+    "name": "Doctor Strange",
+    "image": "https://upload.wikimedia.org/wikipedia/en/7/7c/Doctor_Strange.png",
+    "editorial": "Marvel",
+    "creationDate": "July 1963",
+    "funFact": "Doctor Strange was inspired by Chandu the Magician, a 1930s radio and film character."
+  },
+  {
+    "name": "Cyborg",
+    "image": "https://upload.wikimedia.org/wikipedia/en/b/bc/Cyborg_DC_Comics.jpg",
+    "editorial": "DC",
+    "creationDate": "October 1980",
+    "funFact": "Cyborg was the first Black character to be a founding member of the Teen Titans."
+  },
+  {
+    "name": "Hulk",
+    "image": "https://upload.wikimedia.org/wikipedia/en/1/1c/Hulk_%28comics_character%29.jpg",
+    "editorial": "Marvel",
+    "creationDate": "May 1962",
+    "funFact": "The Hulk was originally grey in his first issue — the green color was due to a printing error that stuck."
+  },
+  {
+    "name": "Hawkman",
+    "image": "https://upload.wikimedia.org/wikipedia/en/2/2e/Hawkman_2021.jpg",
+    "editorial": "DC",
+    "creationDate": "January 1940",
+    "funFact": "Hawkman has one of the most complicated continuities in DC — he has been rebooted more times than any other hero."
+  },
+  {
+    "name": "Black Widow",
+    "image": "https://upload.wikimedia.org/wikipedia/en/4/4b/Black_Widow_%28Natasha_Romanova%29.jpg",
+    "editorial": "Marvel",
+    "creationDate": "April 1964",
+    "funFact": "Black Widow started as a villain before becoming one of Marvel's most iconic heroes."
+  },
+  {
+    "name": "Green Arrow",
+    "image": "https://upload.wikimedia.org/wikipedia/en/4/46/Green_Arrow_Vol_6_1.jpg",
+    "editorial": "DC",
+    "creationDate": "November 1941",
+    "funFact": "Green Arrow was originally inspired by Robin Hood and created as a Batman-like archer."
+  },
+  {
+    "name": "Scarlet Witch",
+    "image": "https://upload.wikimedia.org/wikipedia/en/2/2e/Scarlet_Witch_%28Wanda_Maximoff%29.jpg",
+    "editorial": "Marvel",
+    "creationDate": "March 1964",
+    "funFact": "Scarlet Witch once rewrote all of reality with just three words: 'No more mutants.'"
+  },
+  {
+    "name": "Shazam",
+    "image": "https://upload.wikimedia.org/wikipedia/en/6/67/Shazam_%28DC_Comics_character%29.jpg",
+    "editorial": "DC",
+    "creationDate": "February 1940",
+    "funFact": "Shazam (originally Captain Marvel) outsold Superman in the 1940s, making him DC's most popular hero of that era."
+  }
+]

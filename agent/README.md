@@ -1,6 +1,6 @@
-# A2UI Restaurant finder and table reservation agent sample.
+# A2UI Hero finder and information agent sample.
 
-This sample uses the Agent Development Kit (ADK) along with the A2A protocol to create a simple "Restaurant finder and table reservation" agent that is hosted as an A2A server.
+This sample uses the Agent Development Kit (ADK) along with the A2A protocol to create a simple "Hero finder and information" agent that is hosted as an A2A server. Users can search for heroes (by name or editorial/publisher) and view a hero's details.
 
 ## Prerequisites
 
@@ -10,10 +10,10 @@ This sample uses the Agent Development Kit (ADK) along with the A2A protocol to 
 
 ## Running the Sample
 
-1. Navigate to the samples directory:
+1. Navigate to the agent directory:
 
     ```bash
-    cd a2a_samples/a2ui_restaurant_finder
+    cd agent
     ```
 
 2. Create an environment file with your API key:

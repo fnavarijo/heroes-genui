@@ -21,8 +21,8 @@ from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill
 from a2ui.a2ui_extension import get_a2ui_agent_extension
-from agent import RestaurantAgent
-from agent_executor import RestaurantAgentExecutor
+from agent import HeroAgent
+from agent_executor import HeroAgentExecutor
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
@@ -54,27 +54,27 @@ def main(host, port):
             extensions=[get_a2ui_agent_extension()],
         )
         skill = AgentSkill(
-            id="find_restaurants",
-            name="Find Restaurants Tool",
-            description="Helps find restaurants based on user criteria (e.g., cuisine, location).",
-            tags=["restaurant", "finder"],
-            examples=["Find me the top 10 chinese restaurants in the US"],
+            id="find_heroes",
+            name="Find Heroes Tool",
+            description="Helps find heroes based on user criteria (e.g., name, editorial/publisher).",
+            tags=["hero", "finder"],
+            examples=["Show me the top 10 Marvel heroes"],
         )
 
         base_url = f"http://{host}:{port}"
 
         agent_card = AgentCard(
-            name="Restaurant Agent",
-            description="This agent helps find restaurants based on user criteria.",
+            name="Hero Agent",
+            description="This agent helps find heroes and share information about them.",
             url=base_url,  # <-- Use base_url here
             version="1.0.0",
-            default_input_modes=RestaurantAgent.SUPPORTED_CONTENT_TYPES,
-            default_output_modes=RestaurantAgent.SUPPORTED_CONTENT_TYPES,
+            default_input_modes=HeroAgent.SUPPORTED_CONTENT_TYPES,
+            default_output_modes=HeroAgent.SUPPORTED_CONTENT_TYPES,
             capabilities=capabilities,
             skills=[skill],
         )
 
-        agent_executor = RestaurantAgentExecutor(base_url=base_url)
+        agent_executor = HeroAgentExecutor(base_url=base_url)
 
         request_handler = DefaultRequestHandler(
             agent_executor=agent_executor,

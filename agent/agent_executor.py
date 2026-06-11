@@ -33,19 +33,19 @@ from a2a.utils import (
 )
 from a2a.utils.errors import ServerError
 from a2ui.a2ui_extension import create_a2ui_part, try_activate_a2ui_extension
-from agent import RestaurantAgent
+from agent import HeroAgent
 
 logger = logging.getLogger(__name__)
 
 
-class RestaurantAgentExecutor(AgentExecutor):
-    """Restaurant AgentExecutor Example."""
+class HeroAgentExecutor(AgentExecutor):
+    """Hero AgentExecutor Example."""
 
     def __init__(self, base_url: str):
         # Instantiate two agents: one for UI and one for text-only.
         # The appropriate one will be chosen at execution time.
-        self.ui_agent = RestaurantAgent(base_url=base_url, use_ui=True)
-        self.text_agent = RestaurantAgent(base_url=base_url, use_ui=False)
+        self.ui_agent = HeroAgent(base_url=base_url, use_ui=True)
+        self.text_agent = HeroAgent(base_url=base_url, use_ui=False)
 
     async def execute(
         self,
@@ -62,16 +62,17 @@ class RestaurantAgentExecutor(AgentExecutor):
         use_ui = try_activate_a2ui_extension(context)
 
         # Determine which agent to use based on whether the a2ui extension is active.
-        if use_ui:
-            agent = self.ui_agent
-            logger.info(
-                "--- AGENT_EXECUTOR: A2UI extension is active. Using UI agent. ---"
-            )
-        else:
-            agent = self.text_agent
-            logger.info(
-                "--- AGENT_EXECUTOR: A2UI extension is not active. Using text agent. ---"
-            )
+        agent = self.text_agent
+        # if use_ui:
+        #     agent = self.ui_agent
+        #     logger.info(
+        #         "--- AGENT_EXECUTOR: A2UI extension is active. Using UI agent. ---"
+        #     )
+        # else:
+        #     agent = self.text_agent
+        #     logger.info(
+        #         "--- AGENT_EXECUTOR: A2UI extension is not active. Using text agent. ---"
+        #     )
 
         if context.message and context.message.parts:
             logger.info(
@@ -94,19 +95,9 @@ class RestaurantAgentExecutor(AgentExecutor):
             action = ui_event_part.get("actionName")
             ctx = ui_event_part.get("context", {})
 
-            if action == "book_restaurant":
-                restaurant_name = ctx.get("restaurantName", "Unknown Restaurant")
-                address = ctx.get("address", "Address not provided")
-                image_url = ctx.get("imageUrl", "")
-                query = f"USER_WANTS_TO_BOOK: {restaurant_name}, Address: {address}, ImageURL: {image_url}"
-
-            elif action == "submit_booking":
-                restaurant_name = ctx.get("restaurantName", "Unknown Restaurant")
-                party_size = ctx.get("partySize", "Unknown Size")
-                reservation_time = ctx.get("reservationTime", "Unknown Time")
-                dietary_reqs = ctx.get("dietary", "None")
-                image_url = ctx.get("imageUrl", "")
-                query = f"User submitted a booking for {restaurant_name} for {party_size} people at {reservation_time} with dietary requirements: {dietary_reqs}. The image URL is {image_url}"
+            if action == "view_hero":
+                hero_name = ctx.get("heroName", "Unknown Hero")
+                query = f"USER_WANTS_HERO_DETAILS: {hero_name}"
 
             else:
                 query = f"User submitted an event: {action} with data: {ctx}"
@@ -132,11 +123,9 @@ class RestaurantAgentExecutor(AgentExecutor):
                 )
                 continue
 
-            final_state = (
-                TaskState.completed
-                if action == "submit_booking"
-                else TaskState.input_required
-            )
+            # Search + view-details is an open-ended conversation: the user can
+            # always ask for another hero, so we never mark the task completed.
+            final_state = TaskState.input_required
 
             content = item["content"]
             final_parts = []
