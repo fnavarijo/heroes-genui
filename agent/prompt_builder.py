@@ -801,9 +801,6 @@ def get_text_prompt() -> str:
     1.  **For searching heroes:**
         a. You MUST call the `search_heroes` tool. Extract the hero name, editorial (publisher, e.g. "Marvel" or "DC"), and a specific number (`count`) of heroes from the user's query. Pass empty strings for filters the user did not specify.
         b. After receiving the data, format the hero list as a clear, human-readable text response (name, editorial, and a short note).
-
-    2.  **For viewing a hero's details (when you receive a query like 'USER_WANTS_HERO_DETAILS...'):**
-        a. Use the hero data from `search_heroes` to respond with that hero's full details: publisher (editorial), first appearance (creationDate), and fun fact.
     """
 
 
