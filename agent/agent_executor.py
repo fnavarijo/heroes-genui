@@ -14,6 +14,7 @@
 
 import json
 import logging
+import uuid
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.events import EventQueue
@@ -36,6 +37,43 @@ from a2ui.a2ui_extension import create_a2ui_part, try_activate_a2ui_extension
 from agent import HeroAgent
 
 logger = logging.getLogger(__name__)
+
+# The A2UI message actions that carry a `surfaceId`.
+_SURFACE_ACTIONS = (
+    "beginRendering",
+    "surfaceUpdate",
+    "dataModelUpdate",
+    "deleteSurface",
+)
+
+
+def _remap_surface_ids(messages: list[dict]) -> None:
+    """Rewrites the `surfaceId` of every A2UI message in place to a value that
+    is unique to this turn.
+
+    The prompt templates hardcode surface ids (e.g. "default", "hero-detail").
+    Surfaces are addressable, long-lived canvases keyed by `surfaceId` on the
+    client, so reusing the same id across turns upserts the *previous* surface
+    instead of mounting a new one, and the new message bubble renders blank.
+
+    We generate one token per turn and map each distinct source id to
+    `"<old>-<token>"`, applying it consistently so the `beginRendering` /
+    `surfaceUpdate` / `dataModelUpdate` messages of a turn keep pointing at the
+    same (new) surface. Component ids are left untouched as they are scoped
+    within a surface.
+    """
+    token = uuid.uuid4().hex[:8]
+    id_map: dict[str, str] = {}
+
+    for message in messages:
+        if not isinstance(message, dict):
+            continue
+        for action in _SURFACE_ACTIONS:
+            payload = message.get(action)
+            if isinstance(payload, dict) and "surfaceId" in payload:
+                old_id = payload["surfaceId"]
+                new_id = id_map.setdefault(old_id, f"{old_id}-{token}")
+                payload["surfaceId"] = new_id
 
 
 class HeroAgentExecutor(AgentExecutor):
@@ -137,6 +175,9 @@ class HeroAgentExecutor(AgentExecutor):
                             logger.info(
                                 f"Found {len(json_data)} messages. Creating individual DataParts."
                             )
+                            # Make this turn's surface(s) unique so the client
+                            # mounts a new canvas instead of reusing a prior one.
+                            _remap_surface_ids(json_data)
                             for message in json_data:
                                 final_parts.append(create_a2ui_part(message))
                         else:
@@ -144,6 +185,7 @@ class HeroAgentExecutor(AgentExecutor):
                             logger.info(
                                 "Received a single JSON object. Creating a DataPart."
                             )
+                            _remap_surface_ids([json_data])
                             final_parts.append(create_a2ui_part(json_data))
 
                     except json.JSONDecodeError as e:
