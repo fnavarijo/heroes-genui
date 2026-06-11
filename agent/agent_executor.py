@@ -42,10 +42,9 @@ class HeroAgentExecutor(AgentExecutor):
     """Hero AgentExecutor Example."""
 
     def __init__(self, base_url: str):
-        # Instantiate two agents: one for UI and one for text-only.
-        # The appropriate one will be chosen at execution time.
-        self.ui_agent = HeroAgent(base_url=base_url, use_ui=True)
-        self.text_agent = HeroAgent(base_url=base_url, use_ui=False)
+        # This demo assumes the client always supports A2UI, so we always
+        # serve the UI agent.
+        self.agent = HeroAgent(base_url=base_url)
 
     async def execute(
         self,
@@ -59,20 +58,9 @@ class HeroAgentExecutor(AgentExecutor):
         logger.info(
             f"--- Client requested extensions: {context.requested_extensions} ---"
         )
-        use_ui = try_activate_a2ui_extension(context)
-
-        # Determine which agent to use based on whether the a2ui extension is active.
-        agent = self.text_agent
-        # if use_ui:
-        #     agent = self.ui_agent
-        #     logger.info(
-        #         "--- AGENT_EXECUTOR: A2UI extension is active. Using UI agent. ---"
-        #     )
-        # else:
-        #     agent = self.text_agent
-        #     logger.info(
-        #         "--- AGENT_EXECUTOR: A2UI extension is not active. Using text agent. ---"
-        #     )
+        # Activate the a2ui extension on the response so the client renders UI.
+        try_activate_a2ui_extension(context)
+        agent = self.agent
 
         if context.message and context.message.parts:
             logger.info(
