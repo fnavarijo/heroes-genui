@@ -207,7 +207,7 @@ export const theme: v0_8.Types.Theme = {
       'border-br-12': true,
       'border-bw-0': true,
       'border-bs-s': true,
-      'color-bgc-p30': true,
+      'color-bgc-n10': true,
       'color-c-n100': true,
       'behavior-ho-70': true,
     },
