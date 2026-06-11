@@ -892,14 +892,14 @@ HERO_UI_EXAMPLES = """
     "surfaceId": "hero-detail",
     "components": [
       { "id": "detail-card", "component": { "Card": { "child": "detail-column" } } },
-      { "id": "detail-column", "component": { "Column": { "children": { "explicitList": ["detail-name", "detail-image", "divider1", "detail-editorial", "detail-created", "divider2", "detail-fact"] } } } },
+      { "id": "detail-column", "component": { "Column": { "children": { "explicitList": ["detail-image", "detail-name", "detail-subtitle", "detail-divider", "detail-fact-row"] } } } },
+      { "id": "detail-image", "component": { "Image": { "url": { "path": "image" }, "fit": "cover", "usageHint": "header" } } },
       { "id": "detail-name", "component": { "Text": { "usageHint": "h2", "text": { "path": "name" } } } },
-      { "id": "detail-image", "component": { "Image": { "url": { "path": "image" } } } },
-      { "id": "detail-editorial", "component": { "Text": { "text": { "path": "editorial" } } } },
-      { "id": "detail-created", "component": { "Text": { "text": { "path": "creationDate" } } } },
-      { "id": "detail-fact", "component": { "Text": { "text": { "path": "funFact" } } } },
-      { "id": "divider1", "component": { "Divider": {} } },
-      { "id": "divider2", "component": { "Divider": {} } }
+      { "id": "detail-subtitle", "component": { "Text": { "usageHint": "caption", "text": { "path": "subtitle" } } } },
+      { "id": "detail-divider", "component": { "Divider": { "axis": "horizontal" } } },
+      { "id": "detail-fact-row", "component": { "Row": { "alignment": "start", "children": { "explicitList": ["detail-fact-icon", "detail-fact"] } } } },
+      { "id": "detail-fact-icon", "component": { "Icon": { "name": { "literalString": "star" } } } },
+      { "id": "detail-fact", "weight": 1, "component": { "Text": { "usageHint": "body", "text": { "path": "funFact" } } } }
     ]
   } },
   { "dataModelUpdate": {
@@ -907,8 +907,7 @@ HERO_UI_EXAMPLES = """
     "path": "/",
     "contents": [
       { "key": "name", "valueString": "[HeroName]" },
-      { "key": "editorial", "valueString": "Publisher: [Editorial]" },
-      { "key": "creationDate", "valueString": "First appearance: [CreationDate]" },
+      { "key": "subtitle", "valueString": "[Editorial] · First appearance [CreationDate]" },
       { "key": "funFact", "valueString": "[FunFact]" },
       { "key": "image", "valueString": "[ImageUrl]" }
     ]
@@ -927,7 +926,11 @@ AGENT_INSTRUCTION = """
         b. After receiving the data, you MUST follow the instructions precisely to generate the final a2ui UI JSON, using the appropriate UI example from the `prompt_builder.py` based on the number of heroes.
 
     2.  **For viewing a single hero's details (when you receive a query like 'USER_WANTS_HERO_DETAILS...'):**
-        a. You MUST call `search_heroes` for that hero, then use the `HERO_DETAIL_EXAMPLE` template from `prompt_builder.py` to generate the UI, populating the `dataModelUpdate.contents` with that hero's details (editorial, creationDate, funFact, image).
+        a. You MUST call `search_heroes` for that hero, then use the `HERO_DETAIL_EXAMPLE` template from `prompt_builder.py` to generate the UI, populating the `dataModelUpdate.contents` with that hero's details:
+            - `name`: the hero's name.
+            - `subtitle`: the publisher and first appearance combined as "<Editorial> · First appearance <CreationDate>".
+            - `funFact`: the hero's fun fact.
+            - `image`: the hero's image URL.
 """
 
 
