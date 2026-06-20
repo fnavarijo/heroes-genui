@@ -24,7 +24,7 @@ from google.adk.models.lite_llm import LiteLlm
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
-from prompt_builder import get_text_prompt
+from prompt_builder import get_ui_prompt
 from tools import search_heroes
 
 logger = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ class HeroAgent:
             model=LiteLlm(model=LITELLM_MODEL),
             name="hero_agent",
             description="An agent that finds heroes and shares information about them.",
-            instruction=get_text_prompt(),
+            instruction=get_ui_prompt(),
             tools=[search_heroes],
         )
 

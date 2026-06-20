@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # The A2UI schema remains constant for all A2UI responses.
-A2UI_SCHEMA = r'''
+A2UI_SCHEMA = r"""
 {
   "title": "A2UI Message Schema",
   "description": "Describes a JSON payload for an A2UI (Agent to UI) message, which is used to dynamically construct and update user interfaces. A message MUST contain exactly ONE of the action properties: 'beginRendering', 'surfaceUpdate', 'dataModelUpdate', or 'deleteSurface'.",
@@ -787,7 +787,182 @@ A2UI_SCHEMA = r'''
     }
   }
 }
-'''
+"""
+
+HERO_UI_EXAMPLES = """
+---BEGIN SINGLE_COLUMN_LIST_EXAMPLE---
+[
+  { "beginRendering": { "surfaceId": "default", "root": "root-column", "styles": { "primaryColor": "#1A237E", "font": "Roboto" } } },
+  { "surfaceUpdate": {
+    "surfaceId": "default",
+    "components": [
+      { "id": "root-column", "component": { "Column": { "children": { "explicitList": ["title-heading", "item-list"] } } } },
+      { "id": "title-heading", "component": { "Text": { "usageHint": "h1", "text": { "literalString": "Heroes" } } } },
+      { "id": "item-list", "component": { "List": { "direction": "vertical", "children": { "template": { "componentId": "item-card-template", "dataBinding": "/items" } } } } },
+      { "id": "item-card-template", "component": { "Card": { "child": "card-layout" } } },
+      { "id": "card-layout", "component": { "Row": { "children": { "explicitList": ["template-image", "card-details"] } } } },
+      { "id": "template-image", "weight": 1, "component": { "Image": { "url": { "path": "image" } } } },
+      { "id": "card-details", "weight": 2, "component": { "Column": { "children": { "explicitList": ["template-name", "template-editorial", "template-fact", "template-view-button"] } } } },
+      { "id": "template-name", "component": { "Text": { "usageHint": "h3", "text": { "path": "name" } } } },
+      { "id": "template-editorial", "component": { "Text": { "text": { "path": "editorial" } } } },
+      { "id": "template-fact", "component": { "Text": { "usageHint": "caption", "text": { "path": "funFact" } } } },
+      { "id": "template-view-button", "component": { "Button": { "child": "view-details-text", "primary": true, "action": { "name": "view_hero", "context": [ { "key": "heroName", "value": { "path": "name" } } ] } } } },
+      { "id": "view-details-text", "component": { "Text": { "text": { "literalString": "View Details" } } } }
+    ]
+  } },
+  { "dataModelUpdate": {
+    "surfaceId": "default",
+    "path": "/",
+    "contents": [
+      { "key": "items", "valueMap": [
+        { "key": "item1", "valueMap": [
+          { "key": "name", "valueString": "Spider-Man" },
+          { "key": "editorial", "valueString": "Marvel" },
+          { "key": "funFact", "valueString": "The first teenage superhero who wasn't just a sidekick." },
+          { "key": "image", "valueString": "https://example.com/spiderman.png" }
+        ] },
+        { "key": "item2", "valueMap": [
+          { "key": "name", "valueString": "Batman" },
+          { "key": "editorial", "valueString": "DC" },
+          { "key": "funFact", "valueString": "Relies entirely on intellect, martial arts, and technology." },
+          { "key": "image", "valueString": "https://example.com/batman.jpg" }
+        ] }
+      ] } // Populate this with hero data
+    ]
+  } }
+]
+---END SINGLE_COLUMN_LIST_EXAMPLE---
+
+---BEGIN TWO_COLUMN_LIST_EXAMPLE---
+[
+  { "beginRendering": { "surfaceId": "default", "root": "root-column", "styles": { "primaryColor": "#1A237E", "font": "Roboto" } } },
+  { "surfaceUpdate": {
+    "surfaceId": "default",
+    "components": [
+      { "id": "root-column", "component": { "Column": { "children": { "explicitList": ["title-heading", "hero-row-1"] } } } },
+      { "id": "title-heading", "component": { "Text": { "usageHint": "h1", "text": { "literalString": "Heroes" } } } },
+      { "id": "hero-row-1", "component": { "Row": { "children": { "explicitList": ["item-card-1", "item-card-2"] } } } },
+      { "id": "item-card-1", "weight": 1, "component": { "Card": { "child": "card-layout-1" } } },
+      { "id": "card-layout-1", "component": { "Column": { "children": { "explicitList": ["template-image-1", "card-details-1"] } } } },
+      { "id": "template-image-1", "component": { "Image": { "url": { "path": "/items/item1/image" } } } },
+      { "id": "card-details-1", "component": { "Column": { "children": { "explicitList": ["template-name-1", "template-editorial-1", "template-fact-1", "template-view-button-1"] } } } },
+      { "id": "template-name-1", "component": { "Text": { "usageHint": "h3", "text": { "path": "/items/item1/name" } } } },
+      { "id": "template-editorial-1", "component": { "Text": { "text": { "path": "/items/item1/editorial" } } } },
+      { "id": "template-fact-1", "component": { "Text": { "usageHint": "caption", "text": { "path": "/items/item1/funFact" } } } },
+      { "id": "template-view-button-1", "component": { "Button": { "child": "view-details-text-1", "primary": true, "action": { "name": "view_hero", "context": [ { "key": "heroName", "value": { "path": "/items/item1/name" } } ] } } } },
+      { "id": "view-details-text-1", "component": { "Text": { "text": { "literalString": "View Details" } } } },
+      { "id": "item-card-2", "weight": 1, "component": { "Card": { "child": "card-layout-2" } } },
+      { "id": "card-layout-2", "component": { "Column": { "children": { "explicitList": ["template-image-2", "card-details-2"] } } } },
+      { "id": "template-image-2", "component": { "Image": { "url": { "path": "/items/item2/image" } } } },
+      { "id": "card-details-2", "component": { "Column": { "children": { "explicitList": ["template-name-2", "template-editorial-2", "template-fact-2", "template-view-button-2"] } } } },
+      { "id": "template-name-2", "component": { "Text": { "usageHint": "h3", "text": { "path": "/items/item2/name" } } } },
+      { "id": "template-editorial-2", "component": { "Text": { "text": { "path": "/items/item2/editorial" } } } },
+      { "id": "template-fact-2", "component": { "Text": { "usageHint": "caption", "text": { "path": "/items/item2/funFact" } } } },
+      { "id": "template-view-button-2", "component": { "Button": { "child": "view-details-text-2", "primary": true, "action": { "name": "view_hero", "context": [ { "key": "heroName", "value": { "path": "/items/item2/name" } } ] } } } },
+      { "id": "view-details-text-2", "component": { "Text": { "text": { "literalString": "View Details" } } } }
+    ]
+  } },
+  { "dataModelUpdate": {
+    "surfaceId": "default",
+    "path": "/",
+    "contents": [
+      { "key": "items", "valueMap": [
+        { "key": "item1", "valueMap": [
+          { "key": "name", "valueString": "Spider-Man" },
+          { "key": "editorial", "valueString": "Marvel" },
+          { "key": "funFact", "valueString": "The first teenage superhero who wasn't just a sidekick." },
+          { "key": "image", "valueString": "https://example.com/spiderman.png" }
+        ] },
+        { "key": "item2", "valueMap": [
+          { "key": "name", "valueString": "Batman" },
+          { "key": "editorial", "valueString": "DC" },
+          { "key": "funFact", "valueString": "Relies entirely on intellect, martial arts, and technology." },
+          { "key": "image", "valueString": "https://example.com/batman.jpg" }
+        ] }
+      ] } // Populate this with hero data
+    ]
+  } }
+]
+---END TWO_COLUMN_LIST_EXAMPLE---
+
+---BEGIN HERO_DETAIL_EXAMPLE---
+[
+  { "beginRendering": { "surfaceId": "hero-detail", "root": "detail-card", "styles": { "primaryColor": "#1A237E", "font": "Roboto" } } },
+  { "surfaceUpdate": {
+    "surfaceId": "hero-detail",
+    "components": [
+      { "id": "detail-card", "component": { "Card": { "child": "detail-column" } } },
+      { "id": "detail-column", "component": { "Column": { "children": { "explicitList": ["detail-image", "detail-name", "detail-subtitle", "detail-divider", "detail-fact-row"] } } } },
+      { "id": "detail-image", "component": { "Image": { "url": { "path": "image" }, "fit": "cover", "usageHint": "header" } } },
+      { "id": "detail-name", "component": { "Text": { "usageHint": "h2", "text": { "path": "name" } } } },
+      { "id": "detail-subtitle", "component": { "Text": { "usageHint": "caption", "text": { "path": "subtitle" } } } },
+      { "id": "detail-divider", "component": { "Divider": { "axis": "horizontal" } } },
+      { "id": "detail-fact-row", "component": { "Row": { "alignment": "start", "children": { "explicitList": ["detail-fact-icon", "detail-fact"] } } } },
+      { "id": "detail-fact-icon", "component": { "Icon": { "name": { "literalString": "star" } } } },
+      { "id": "detail-fact", "weight": 1, "component": { "Text": { "usageHint": "body", "text": { "path": "funFact" } } } }
+    ]
+  } },
+  { "dataModelUpdate": {
+    "surfaceId": "hero-detail",
+    "path": "/",
+    "contents": [
+      { "key": "name", "valueString": "[HeroName]" },
+      { "key": "subtitle", "valueString": "[Editorial] · First appearance [CreationDate]" },
+      { "key": "funFact", "valueString": "[FunFact]" },
+      { "key": "image", "valueString": "[ImageUrl]" }
+    ]
+  } }
+]
+---END HERO_DETAIL_EXAMPLE---
+"""
+
+AGENT_INSTRUCTION = """
+    You are a helpful hero information assistant. Your goal is to help users find and learn about heroes using a rich UI.
+
+    To achieve this, you MUST follow this logic:
+
+    1.  **For searching heroes:**
+        a. You MUST call the `search_heroes` tool. Extract the hero name, editorial (publisher, e.g. "Marvel" or "DC"), and a specific number (`count`) of heroes from the user's query (e.g., for "top 5 Marvel heroes", editorial is "Marvel" and count is 5). Pass empty strings for filters the user did not specify.
+        b. After receiving the data, you MUST follow the instructions precisely to generate the final a2ui UI JSON, using the appropriate UI example from the `prompt_builder.py` based on the number of heroes.
+
+    2.  **For viewing a single hero's details (when you receive a query like 'USER_WANTS_HERO_DETAILS...'):**
+        a. You MUST call `search_heroes` for that hero, then use the `HERO_DETAIL_EXAMPLE` template from `prompt_builder.py` to generate the UI, populating the `dataModelUpdate.contents` with that hero's details:
+            - `name`: the hero's name.
+            - `subtitle`: the publisher and first appearance combined as "<Editorial> · First appearance <CreationDate>".
+            - `funFact`: the hero's fun fact.
+            - `image`: the hero's image URL.
+"""
+
+
+def get_ui_prompt() -> str:
+    """
+    Constructs the full prompt with UI instructions, rules, examples, and schema.
+
+    Returns:
+        A string to be used as the system prompt for the LLM.
+    """
+    return f"""
+    {AGENT_INSTRUCTION}
+    You are a helpful hero information assistant. Your final output MUST be a a2ui UI JSON response.
+
+    To generate the response, you MUST follow these rules:
+    1.  Your response MUST be in two parts, separated by the delimiter: `---a2ui_JSON---`.
+    2.  The first part is your conversational text response.
+    3.  The second part is a single, raw JSON object which is a list of A2UI messages.
+    4.  The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
+
+    --- UI TEMPLATE RULES ---
+    -   If the query is for a list of heroes, use the hero data you have already received from the `search_heroes` tool to populate the `dataModelUpdate.contents` array (e.g., as a `valueMap` for the "items" key).
+    -   If the number of heroes is 5 or fewer, you MUST use the `SINGLE_COLUMN_LIST_EXAMPLE` template.
+    -   If the number of heroes is more than 5, you MUST use the `TWO_COLUMN_LIST_EXAMPLE` template.
+    -   If the query is to view a single hero's details (e.g., "USER_WANTS_HERO_DETAILS..."), you MUST use the `HERO_DETAIL_EXAMPLE` template, populating it with that hero's data from `search_heroes`.
+
+    {HERO_UI_EXAMPLES}
+
+    ---BEGIN A2UI JSON SCHEMA---
+    {A2UI_SCHEMA}
+    ---END A2UI JSON SCHEMA---
+    """
 
 
 def get_text_prompt() -> str:
